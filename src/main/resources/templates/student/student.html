@@ -1,21 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>学生端|学生信息管理系统</title>
-    <link rel="shortcut icon" href="favicon.ico"/>
-	<link rel="bookmark" href="favicon.ico"/>
-    <link rel="stylesheet" type="text/css" th:href="@{easyui/css/default.css" />
-    <link rel="stylesheet" type="text/css" th:href="@{easyui/themes/default/easyui.css" />
-    <link rel="stylesheet" type="text/css" th:href="@{easyui/themes/icon.css" />
-    <script type="text/javascript" th:src="@{easyui/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{easyui/jquery.easyui.min.js}"></script>
-	<script type="text/javascript" src='easyui/js/outlook2.js'> </script>
+    <link rel="shortcut icon" th:href="@{/dingyun.ico}"/>
+	<link rel="bookmark" th:href="@{/dingyun.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/css/default.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/default/easyui.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/icon.css}" />
+    <script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+	<script type="text/javascript" th:src="@{/easyui/js/outlook2.js}"> </script>
     <script type="text/javascript">
 	 var _menus = {"menus":[
 						{"menuid":"1","icon":"","menuname":"教学管理",
 							"menus":[
-									{"menuid":"11","menuname":"成绩查询","icon":"icon-find","url":"StudentServlet?method=toExamStudentView"},
+									{"menuid":"11","menuname":"成绩查询","icon":"icon-find","url":"base/welcome"},
 								]
 						},
 						{"menuid":"2","icon":"","menuname":"班级信息",
@@ -47,7 +47,7 @@
         <span style="padding-left:10px; font-size: 16px; ">学生成绩管理系统|学生端</span>
     </div>
     <div region="south" split="true" style="height: 30px; background: #D2E0F2; ">
-        <div class="footer">Copyright &copy; 学生成绩管理系统 By 许肖飞</div>
+        <div class="footer">Copyright &copy; 学生成绩管理系统 By dingyun</div>
     </div>
     <div region="west" hide="true" split="true" title="导航菜单" style="width:180px;" id="west">
 	<div id="nav" class="easyui-accordion" fit="true" border="false">
@@ -57,11 +57,12 @@
     </div>
     <div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden">
         <div id="tabs" class="easyui-tabs"  fit="true" border="false" >
-			<jsp:include page="/WEB-INF/view/student/welcome.jsp" />
+
+			<!--<th:include page="@{/student/welcome.html}" />-->
 		</div>
     </div>
 
-	<iframe width=0 height=0 src="refresh.jsp"></iframe>
+	<iframe width=0 height=0 th:src="@{student/welcome.html}"></iframe>
 	
 </body>
 </html>

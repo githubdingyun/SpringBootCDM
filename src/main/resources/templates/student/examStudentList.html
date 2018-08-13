@@ -1,15 +1,15 @@
 
 <!DOCTYPE html >
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<title>考试列表</title>
-	<link rel="stylesheet" type="text/css" th:href="@{easyui/themes/default/easyui.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{easyui/themes/icon.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{easyui/css/demo.css}">
-	<script type="text/javascript" th:src="@{easyui/jquery.min.js}"></script>
-	<script type="text/javascript" th:src="@{easyui/jquery.easyui.min.js}"></script>
-	<script type="text/javascript" th:src="@{easyui/themes/locale/easyui-lang-zh_CN.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/default/easyui.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/icon.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/easyui/css/demo.css}">
+	<script type="text/javascript" th:src="@{/easyui/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/easyui/jquery.easyui.min.js}"></script>
+	<script type="text/javascript" th:src="@{/easyui/themes/locale/easyui-lang-zh_CN.js}"></script>
 	<script type="text/javascript">
 		//验证只能为数字
 		function scoreBlur(score){
@@ -17,29 +17,29 @@
 				$(score).val("");
 			}
 		}
-	$(function() {	
-		
+	$(function() {
+
 		var table;
-		
-		//datagrid初始化 
-	    $('#dataList').datagrid({ 
-	        title:'考试列表', 
-	        iconCls:'icon-more',//图标 
-	        border: true, 
-	        collapsible: false,//是否可折叠的 
-	        fit: true,//自动大小 
+
+		//datagrid初始化
+	    $('#dataList').datagrid({
+	        title:'考试列表',
+	        iconCls:'icon-more',//图标
+	        border: true,
+	        collapsible: false,//是否可折叠的
+	        fit: true,//自动大小
 	        method: "post",
 	        url:"ExamServlet?method=StudentExamList&t="+new Date().getTime(),
-	        idField:'id', 
-	        singleSelect: true,//是否单选 
-	        pagination: false,//分页控件 
-	        rownumbers: true,//行号 
+	        idField:'id',
+	        singleSelect: true,//是否单选
+	        pagination: false,//分页控件
+	        rownumbers: true,//行号
 	        remoteSort: false,
-	        columns: [[  
+	        columns: [[
 				{field:'chk',checkbox: true,width:50},
- 		        {field:'name',title:'考试名称',width:200},    
+ 		        {field:'name',title:'考试名称',width:200},
  		        {field:'etime',title:'考试时间',width:150, sortable: true},
- 		        {field:'type',title:'考试类型',width:100, 
+ 		        {field:'type',title:'考试类型',width:100,
  		        	formatter: function(value,row,index){
 						if(value == 1){
 							return "年级统考"
@@ -48,46 +48,46 @@
 						}
  					}
  		        },
- 		        {field:'grade',title:'考试年级',width:100, 
+ 		        {field:'grade',title:'考试年级',width:100,
  		        	formatter: function(value,row,index){
  						if (row.grade){
  							return row.grade.name;
  						} else {
  							return value;
  						}
- 					}		
+ 					}
  		        },
- 		        {field:'clazz',title:'考试班级',width:100, 
+ 		        {field:'clazz',title:'考试班级',width:100,
  		        	formatter: function(value,row,index){
  						if (row.clazz){
  							return row.clazz.name;
  						} else {
  							return value;
  						}
- 					}	
+ 					}
  		        },
- 		       {field:'course',title:'考试科目',width:100, 
+ 		       {field:'course',title:'考试科目',width:100,
  		        	formatter: function(value,row,index){
  						if (row.course){
  							return row.course.name;
  						} else {
  							return value;
  						}
- 					}	
+ 					}
  		        },
  		       	{field:'remark',title:'备注',width:250}
-	 		]], 
+	 		]],
 	 		toolbar: [
 	        	{
 	        		text: '查看成绩',
 	        		iconCls: 'icon-zoom-in',
 	        		handler: function(){
 	                	var exam = $("#dataList").datagrid("getSelected");
-	        	    	
+
 	                	if(exam == null){
 	                    	$.messager.alert("消息提醒", "请选择考试查看!", "warning");
 	                    } else{
-	                    	
+
 	                    	var data = {id: exam.id, gradeid: exam.gradeid, clazzid:exam.clazzid,courseid:exam.courseid, type: exam.type};
 	                    	//动态显示该次考试的科目
 	                    	$.ajax({
@@ -97,48 +97,48 @@
 	        					dataType: "json",
 	        					async: false,
 	        					success: function(result){
-	        						var columns = [];  
-	        			            $.each(result, function(i, course){  
-	        			                var column={};  
-	        			                column["field"] = "course"+course.id;    
-	        			                column["title"] = course.name;  
-	        			                column["width"] = 80;  
+	        						var columns = [];
+	        			            $.each(result, function(i, course){
+	        			                var column={};
+	        			                column["field"] = "course"+course.id;
+	        			                column["title"] = course.name;
+	        			                column["width"] = 80;
 	        			                column["align"] = "center";
-	        			                column["resizable"] = false;  
-	        			                column["sortable"] = true;  
-	        			                
+	        			                column["resizable"] = false;
+	        			                column["sortable"] = true;
+
 	        			                columns.push(column);
-	        			            }); 
-	        			            
+	        			            });
+
 	        			            if(exam.type == 1){
 	        			            	columns.push({field:'total',title:'总分',width:70, sortable: true});
 	        			            }
-	        			            
-	        			            $('#escoreList').datagrid({ 
+
+	        			            $('#escoreList').datagrid({
 	        			    	        columns: [
 	        								columns
 	        			    	        ]
-	        			    	    }); 
-	        			            
+	        			    	    });
+
 	        					}
 	                    	});
 	                    	setTimeout(function(){
 	        			    	$("#escoreList").datagrid("options").url = "ScoreServlet?method=ScoreList&t="+new Date().getTime();
 	        			    	$("#escoreList").datagrid("options").queryParams = data;
 	        			    	$("#escoreList").datagrid("reload");
-	        			    	
+
 	        			    	$("#escoreListDialog").dialog("open");
 	                    	}, 100)
-	        		    	
+
 	        	    	}
-	                	
-	                	
+
+
 	                	$("#escoreDialog").dialog("open");
 	        		}
-	        	}          
+	        	}
 	        ]
-	    }); 
-	  	
+	    });
+
 	  	//考试成绩窗口
 	    $("#escoreDialog").dialog({
 	    	title: "考试成绩",
@@ -152,24 +152,24 @@
 	    	draggable: true,
 	    	closed: true,
 	    });
-	  	
+
 	  	//成绩列表
-	    $("#escoreList").datagrid({ 
-   	        border: true, 
-   	        collapsible: false,//是否可折叠的 
-   	        fit: true,//自动大小 
+	    $("#escoreList").datagrid({
+   	        border: true,
+   	        collapsible: false,//是否可折叠的
+   	        fit: true,//自动大小
    	        method: "post",
    	        noheader: true,
-   	        singleSelect: true,//是否单选 
-   	        rownumbers: true,//行号 
-   	     	sortOrder:'DESC', 
+   	        singleSelect: true,//是否单选
+   	        rownumbers: true,//行号
+   	     	sortOrder:'DESC',
 	        remoteSort: false,
-   	        frozenColumns: [[  
-   				{field:'number',title:'学号',width:120,resizable: false,sortable: false},    
-   				{field:'name',title:'姓名',width:120,resizable: false}	,        
+   	        frozenColumns: [[
+   				{field:'number',title:'学号',width:120,resizable: false,sortable: false},
+   				{field:'name',title:'姓名',width:120,resizable: false}	,
    	        ]],
    	    });
-	  	
+
 	});
 	</script>
 </head>
